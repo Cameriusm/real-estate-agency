@@ -24,6 +24,7 @@ const PropertyDetails = ({
     furnishingStatus,
     amenities,
     photos,
+    coverPhoto,
   },
 }) => (
   <Box maxWidth="1000px" margin="auto" p="4">
@@ -37,7 +38,7 @@ const PropertyDetails = ({
           AED {price} {rentFrequency && `/${rentFrequency}`}
         </Text>
         <Spacer />
-        <Avatar size="sm" src={agency?.logo?.url}></Avatar>
+        <Avatar size="sm" src={coverPhoto}></Avatar>
       </Flex>
       <Flex
         alignItems="center"
@@ -47,7 +48,8 @@ const PropertyDetails = ({
         color="blue.400"
       >
         {rooms}
-        <FaBed /> | {baths} <FaBath /> | {millify(area)} sqft <BsGridFill />
+        <FaBed /> | {baths} <FaBath /> | 69 sqft <BsGridFill />
+        {/* <FaBed /> | {baths} <FaBath /> | {millify(area)} sqft <BsGridFill /> */}
       </Flex>
     </Box>
     <Box marginTop="2">
@@ -97,28 +99,26 @@ const PropertyDetails = ({
       )}
     </Flex>
     <Box>
-      {amenities.length && (
+      {amenities.length > 1 && (
         <Text fontSize="2xl" fontWeight="black" marginTop="5">
           Facilites:
         </Text>
       )}
       <Flex flexWrap="wrap">
-        {amenities?.map((item) =>
-          item?.amenities?.map((amenity) => (
-            <Text
-              key={amenity.text}
-              fontWeight="bold"
-              color="blue.400"
-              fontSize="l"
-              p="2"
-              bg="gray.200"
-              m="1"
-              borderRadius="5"
-            >
-              {amenity.text}
-            </Text>
-          ))
-        )}
+        {amenities?.map((item) => (
+          <Text
+            key={item}
+            fontWeight="bold"
+            color="blue.400"
+            fontSize="l"
+            p="2"
+            bg="gray.200"
+            m="1"
+            borderRadius="5"
+          >
+            {item}
+          </Text>
+        ))}
       </Flex>
     </Box>
   </Box>
@@ -127,7 +127,10 @@ const PropertyDetails = ({
 export default PropertyDetails;
 
 export async function getServerSideProps({ params: { id } }) {
-  const data = await fetchApi(`${baseUrl}/properties/detail?externalID=${id}`);
+  const data = await fetchApi(
+    `http://localhost:3000/api/getPropertyById?id=${id}`
+  );
+  // const data = await fetchApi(`${baseUrl}/properties/detail?externalID=${id}`);
 
   return {
     props: {

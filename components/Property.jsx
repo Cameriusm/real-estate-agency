@@ -16,12 +16,11 @@ const Property = ({
     title,
     baths,
     area,
-    agency,
     isVerified,
-    externalID,
+    id,
   },
 }) => (
-  <Link href={`/property/${externalID}`} passHref>
+  <Link href={`/property/${id}`} passHref>
     <Flex
       flexWrap="wrap"
       w="420px"
@@ -32,7 +31,8 @@ const Property = ({
     >
       <Box>
         <Image
-          src={coverPhoto ? coverPhoto.url : DefaultImage}
+          // src={coverPhoto ? coverPhoto : DefaultImage}
+          src={DefaultImage}
           width={400}
           height={260}
           alt="coverPhoto"
@@ -46,11 +46,11 @@ const Property = ({
               {isVerified && <GoVerified />}
             </Box>
             <Text fontWeight="bold" fontSize="lg">
-              AED ${millify(price)} ${rentFrequency && `/${rentFrequency}`}
+              Rub ${millify(price)} ${rentFrequency && `/${rentFrequency}`}
             </Text>
           </Flex>
           <Box>
-            <Avatar size="sm" src={agency?.logo?.url} />
+            <Avatar size="sm" src={coverPhoto && DefaultImage} />
           </Box>
         </Flex>
         <Flex

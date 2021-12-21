@@ -3,17 +3,20 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Flex, Box, Text, Icon } from "@chakra-ui/react";
 import { BsFilter } from "react-icons/bs";
-import SearchFilters from "../components/SearchFilter";
-import Property from "../components/Property";
 
+import Property from "../components/Property";
+import SearchFilters from "../components/SearchFilters";
+import { baseUrl, fetchApi } from "../utils/fetchApi";
 import noresult from "../assets/images/noresult.svg";
-import { fetchApi, baseUrl } from "../utils/fetchApi";
+
 const Search = ({ properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
+
   return (
     <Box>
       <Flex
+        onClick={() => setSearchFilters(!searchFilters)}
         cursor="pointer"
         bg="gray.100"
         borderBottom="1px"
@@ -23,7 +26,6 @@ const Search = ({ properties }) => {
         fontSize="lg"
         justifyContent="center"
         alignItems="center"
-        onClick={() => setSearchFilters((prevFilters) => !prevFilters)}
       >
         <Text>Search Property By Filters</Text>
         <Icon paddingLeft="2" w="7" as={BsFilter} />
@@ -41,21 +43,19 @@ const Search = ({ properties }) => {
         <Flex
           justifyContent="center"
           alignItems="center"
-          flexDirection="column"
+          flexDir="column"
           marginTop="5"
           marginBottom="5"
         >
-          <Image src={noresult} alt="no result" />
-          <Text fontSize="2xl" marginTop="3">
-            No Results
+          <Image src={noresult} alt="noresult" />
+          <Text fontSize="xl" marginTop="3">
+            No Result Found.
           </Text>
         </Flex>
       )}
     </Box>
   );
 };
-
-export default Search;
 
 export async function getServerSideProps({ query }) {
   const purpose = query.purpose || "for-rent";
@@ -70,7 +70,8 @@ export async function getServerSideProps({ query }) {
   const categoryExternalID = query.categoryExternalID || "4";
 
   const data = await fetchApi(
-    `${baseUrl}/properties/list?locationExternalIDs=${locationExternalIDs}&purpose=${purpose}&categoryExternalID=${categoryExternalID}&bathsMin=${bathsMin}&rentFrequency=${rentFrequency}&priceMin=${minPrice}&priceMax=${maxPrice}&roomsMin=${roomsMin}&sort=${sort}&areaMax=${areaMax}`
+    // `${baseUrl}/properties/list?locationExternalIDs=${locationExternalIDs}&purpose=${purpose}&categoryExternalID=${categoryExternalID}&bathsMin=${bathsMin}&rentFrequency=${rentFrequency}&priceMin=${minPrice}&priceMax=${maxPrice}&roomsMin=${roomsMin}&sort=${sort}&areaMax=${areaMax}`
+    `http://localhost:3000/api/getProperties?purpose=${purpose}&bathsMin=${bathsMin}&rentFrequency=${rentFrequency}&priceMin=${minPrice}&priceMax=${maxPrice}&roomsMin=${roomsMin}&sort=${sort}&areaMax=${areaMax}`
   );
 
   return {
@@ -79,3 +80,5 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
+
+export default Search;
