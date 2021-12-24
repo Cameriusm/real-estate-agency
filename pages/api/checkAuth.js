@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { verify } from "jsonwebtoken";
 console.log("bruh0");
-export default async function (req, res) {
+export default async function handler(req, res) {
   console.log("bruh1");
   verify(
     req.cookies.auth,
