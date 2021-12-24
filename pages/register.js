@@ -74,7 +74,6 @@ const RegisterForm = () => {
 
   const [message, setMessage] = useState("");
   const onSubmit = async (data) => {
-    alert(JSON.stringify(data));
     const resp = await fetch("http://localhost:3000/api/signUp", {
       method: "POST",
       headers: {
@@ -90,16 +89,17 @@ const RegisterForm = () => {
       }),
     });
     const json = await resp.json();
+    if (json.message === "Same email") {
+      console.log("web still email");
+      setMessage("Данный email уже занят!");
+      return;
+    }
+    console.log(json);
     Router.replace("/login");
-    setMessage(json);
   };
-
-  //   const [email, setEmail] = useState("");
-  //   const [password, setPassword] = useState("");
 
   const loginHandler = () => {
     console.log("Logging");
-    // console.log(email, password);
   };
   return (
     <Box my={4} textAlign="left">
@@ -110,6 +110,10 @@ const RegisterForm = () => {
             <Input
               {...register("name", {
                 required: "Поле обязательно",
+                pattern: {
+                  message: "Используйте только русские буквы!",
+                  value: /^[А-Яа-яЁё\s]+$/,
+                },
               })}
             />
             <Box color="red">{errors?.name && errors?.name?.message}</Box>
@@ -119,6 +123,10 @@ const RegisterForm = () => {
             <Input
               {...register("second_name", {
                 required: "Поле обязательно",
+                pattern: {
+                  message: "Используйте только русские символы!",
+                  value: /^[А-Яа-яЁё\s]+$/,
+                },
               })}
             />
             <Box color="red">
@@ -130,6 +138,7 @@ const RegisterForm = () => {
         <FormControl display="block">
           <FormLabel display="block">Email</FormLabel>
           <Input
+            type="email"
             {...register("email", {
               required: "Поле обязательно",
             })}
@@ -139,6 +148,8 @@ const RegisterForm = () => {
         <FormControl display="block">
           <FormLabel display="block">Номер телефона</FormLabel>
           <Input
+            type="number"
+            maxLength="11"
             {...register("phone_number", {
               required: "Поле обязательно",
               minLength: {
@@ -158,6 +169,7 @@ const RegisterForm = () => {
         <FormControl display="block">
           <FormLabel display="block">Пароль</FormLabel>
           <Input
+            type="password"
             {...register("password", {
               required: "Поле обязательно",
               minLength: {
@@ -168,6 +180,10 @@ const RegisterForm = () => {
                 value: 25,
                 message: "Максимум 25 символов",
               },
+              pattern: {
+                message: "Используйте только латинские символы!",
+                value: /^[a-zA-Z]*$/,
+              },
             })}
           />
           <Box color="red">{errors?.password && errors?.password?.message}</Box>
@@ -175,7 +191,6 @@ const RegisterForm = () => {
 
         <br />
         <Button
-          // disabled={!isValid}
           onClick={loginHandler}
           variantColor={VARIANT_COLOR}
           width="full"
@@ -185,7 +200,11 @@ const RegisterForm = () => {
           Зарегистрироваться
         </Button>
       </form>
-      {/* {message && <Box>Вы успешно зарегистрировались!</Box>} */}
+      {message && (
+        <Box color="red" textAlign="center" my="5">
+          {message}
+        </Box>
+      )}
     </Box>
   );
 };

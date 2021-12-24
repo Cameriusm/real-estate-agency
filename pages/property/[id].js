@@ -35,7 +35,7 @@ const PropertyDetails = ({
           {isVerified && <GoVerified />}
         </Box>
         <Text fontWeight="bold" fontSize="lg">
-          AED {price} {rentFrequency && `/${rentFrequency}`}
+          {+price}₽ {rentFrequency && `/${rentFrequency}`}
         </Text>
         <Spacer />
         <Avatar size="sm" src={coverPhoto}></Avatar>
@@ -53,11 +53,13 @@ const PropertyDetails = ({
       </Flex>
     </Box>
     <Box marginTop="2">
-      <Text fontSize="lg" marginBottom="2" fontWeight="bold">
+      <Text fontSize="xl" marginBottom="2" fontWeight="bold">
         {title}
       </Text>
       <Text lineHeight="2" color="gray.600">
-        {description}
+        <b fontSize="xl">{`Описание: `}</b>
+        <br></br>
+        {` ${description}`}
       </Text>
     </Box>
     <Flex
@@ -72,7 +74,7 @@ const PropertyDetails = ({
         borderColor="gray.100"
         p="3"
       >
-        <Text>Type</Text>
+        <Text>Категория:</Text>
         <Text fontWeight="bold">{type}</Text>
       </Flex>
       <Flex
@@ -82,7 +84,7 @@ const PropertyDetails = ({
         borderColor="gray.100"
         p="3"
       >
-        <Text>Purpose</Text>
+        <Text>Назначение</Text>
         <Text fontWeight="bold">{purpose}</Text>
       </Flex>
       {furnishingStatus && (
@@ -101,7 +103,7 @@ const PropertyDetails = ({
     <Box>
       {amenities.length > 1 && (
         <Text fontSize="2xl" fontWeight="black" marginTop="5">
-          Facilites:
+          Услуги:
         </Text>
       )}
       <Flex flexWrap="wrap">

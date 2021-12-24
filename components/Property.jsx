@@ -32,7 +32,8 @@ const Property = ({
       <Box>
         <Image
           // src={coverPhoto ? coverPhoto : DefaultImage}
-          src={DefaultImage}
+          src={coverPhoto || DefaultImage}
+          // src={coverPhoto}
           width={400}
           height={260}
           alt="coverPhoto"
@@ -40,13 +41,18 @@ const Property = ({
       </Box>
       <Box w="full">
         <Flex paddingTop="2" alignItems="center" justifyContent="space-between">
-          <Flex alignItems="center">
-            <Box paddingRigt="3" color="green.400">
-              {" "}
-              {isVerified && <GoVerified />}
-            </Box>
+          <Flex flexDirection="column" textAlign="left">
             <Text fontWeight="bold" fontSize="lg">
-              Rub ${millify(price)} ${rentFrequency && `/${rentFrequency}`}
+              <Flex alignItems="center">
+                <Box paddingRigt="3" color="green.400">
+                  {" "}
+                  {isVerified && <GoVerified /> && " "} {/* <GoVerified /> */}
+                </Box>{" "}
+                {+price}₽ {rentFrequency && `/${rentFrequency}`}
+              </Flex>
+            </Text>
+            <Text fontSize="lg" display="block">
+              {title.length > 30 ? `${title.substring(0, 30)}...` : title}
             </Text>
           </Flex>
           <Box>
@@ -60,12 +66,12 @@ const Property = ({
           w="250px"
           color="blue.400"
         >
-          {rooms} <FaBed /> | {baths} <FaBath /> | {millify(area)} sqft{" "}
+          {rooms} <FaBed /> | {baths} <FaBath /> | {millify(area)} кв/м²{" "}
           <BsGridFill />
         </Flex>
-        <Text fontSize="lg">
+        {/* <Text fontSize="lg">
           {title.length > 30 ? `${title.substring(0, 30)}...` : title}
-        </Text>
+        </Text> */}
       </Box>
     </Flex>
   </Link>

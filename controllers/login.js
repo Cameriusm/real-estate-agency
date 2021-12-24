@@ -22,6 +22,12 @@ const login = (req, res) => {
       res.send([false]);
     } else {
       const owner = result;
+      console.log("owner", owner);
+      console.log("owner", password);
+      console.log("notteach", owner[0].password);
+      if (owner[0].password === undefined) {
+        res.send({ message: false });
+      }
       console.log(owner[0].password);
       compare(password, owner[0].password, function (err, result) {
         if (!err && result) {
@@ -37,8 +43,9 @@ const login = (req, res) => {
               path: "/",
             })
           );
-          res.json({ message: "welcome" });
+          res.json({ owner: owner });
         } else {
+          console.log(err);
           res.json({ message: "Falses" });
         }
       });

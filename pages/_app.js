@@ -2,10 +2,12 @@ import Router from "next/router";
 import Head from "next/head";
 import NProgress from "nprogress";
 import { ChakraProvider } from "@chakra-ui/react";
-
+import { useState } from "react";
 import Layout from "../components/Layout";
+import AuthContextProvider from "../contexts/AuthContext";
 
 function MyApp({ Component, pageProps }) {
+  const [authed, setAuthed] = useState(false);
   NProgress.configure({ showSpinner: false });
 
   Router.events.on("routeChangeStart", () => {
