@@ -1,9 +1,9 @@
 import pool from "../config/db";
 
-const getAllProperties = (req, res) => {
+const getAllProperties = (perPage, purpose) => {
   // res.send("Done Successfuly");
-  const { perPage, purpose } = req.query;
-  console.log(perPage);
+  // const { perPage, purpose } = req.query;
+  console.log(perPage, purpose);
   pool.query(
     `SELECT * FROM property${
       purpose === "for-sale" ? " WHERE purpose_id = 1" : " WHERE purpose_id = 2"
@@ -11,9 +11,11 @@ const getAllProperties = (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.send([false]);
+        return [false];
       } else {
-        res.send({ hits: result });
+        console.log(result);
+        console.log({ hitsssss: result });
+        return { hits: result };
       }
     }
   );

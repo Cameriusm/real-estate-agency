@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const baseUrl = "https://real-estate-agency-deployed-beta.vercel.app/";
+// export const baseUrl = "https://real-estate-agency-deployed-beta.vercel.app/";
+export const baseUrl = "http://localhost:3000";
 
 export const fetchApi = async (url) => {
   const { data } = await axios.get(url, {

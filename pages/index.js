@@ -6,6 +6,8 @@ import Property from "../components/Property";
 import { AuthContext } from "../contexts/AuthContext";
 import { Component, useContext, useEffect } from "react";
 import { baseUrl, fetchApi } from "../utils/fetchApi";
+import getAllProperties from "../controllers/getProperties";
+import axios from "axios";
 const Banner = ({
   purpose,
   title1,
@@ -93,21 +95,32 @@ export default function Home({ propertiesForSale, propertiesForRent, isAuth }) {
 }
 
 export async function getStaticProps() {
-  const propertyForSale = await fetchApi(
-    `${baseUrl}/api/getProperties?purpose=for-sale&hitsPerPage=6`
-  );
+  const propertyForSale = await getAllProperties("6", "for-sale");
+  const propertyForRent = await getAllProperties("6", "for-rent");
+  console.log(propertyForSale);
+  const propertiesSale = JSON.stringify(propertyForSale);
+  // const propertyForSale = await staticFetch(
+  //   `${baseUrl}/api/getProperties?purpose=for-sale&hitsPerPage=6`
+  // );
 
-  const propertyForRent = await fetchApi(
-    `${baseUrl}/api/getProperties?purpose=for-rent&hitsPerPage=6`
-  );
+  // const propertyForRent = await staticFetch(
+  //   `${baseUrl}/api/getProperties?purpose=for-rent&hitsPerPage=6`
+  //   // http://localhost:3000/
+  // );
+  console.log(propertyForRent);
 
-  const isAuth = await fetchApi(`${baseUrl}/api/checkAuth`);
-  console.log("fetch result:", isAuth);
+  // const isAuth = await staticFetch(`${baseUrl}/api/checkAuth`);
+  // console.log("fetch result:", isAuth);
   return {
     props: {
-      propertiesForSale: propertyForSale?.hits,
+      propertiesForSell: propertiesSale?.hits,
       propertiesForRent: propertyForRent?.hits,
-      isAuth: isAuth,
+      // isAuth: isAuth,
     },
   };
 }
+
+export const staticFetch = async (url) => {
+  const { data } = await axios.get(url, {});
+  return data;
+};
