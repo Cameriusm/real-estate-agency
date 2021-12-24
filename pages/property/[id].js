@@ -129,9 +129,7 @@ const PropertyDetails = ({
 export default PropertyDetails;
 
 export async function getServerSideProps({ params: { id } }) {
-  const data = await fetchApi(
-    `http://localhost:3000/api/getPropertyById?id=${id}`
-  );
+  const data = await fetchApi(`${baseUrl}/api/getPropertyById?id=${id}`);
   // const data = await fetchApi(`${baseUrl}/properties/detail?externalID=${id}`);
 
   return {

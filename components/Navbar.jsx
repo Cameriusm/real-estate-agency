@@ -16,10 +16,11 @@ import { FiKey } from "react-icons/fi";
 import { AiFillBank, AiFillDashboard } from "react-icons/ai";
 import { AuthContext } from "../contexts/AuthContext";
 import Router from "next/router";
+import { baseUrl } from "../utils/fetchApi";
 const LogOutHandler = async (e) => {
   console.log("LogOutHandler");
   // e.preventDefault();
-  const result = await fetch("http://localhost:3000/api/destroyToken", {
+  const result = await fetch(`${baseUrl}/api/destroyToken`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

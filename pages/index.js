@@ -94,14 +94,14 @@ export default function Home({ propertiesForSale, propertiesForRent, isAuth }) {
 
 export async function getStaticProps() {
   const propertyForSale = await fetchApi(
-    `http://localhost:3000/api/getProperties?purpose=for-sale&hitsPerPage=6`
+    `${baseUrl}/api/getProperties?purpose=for-sale&hitsPerPage=6`
   );
 
   const propertyForRent = await fetchApi(
-    `http://localhost:3000/api/getProperties?purpose=for-rent&hitsPerPage=6`
+    `${baseUrl}/api/getProperties?purpose=for-rent&hitsPerPage=6`
   );
 
-  const isAuth = await fetchApi(`http://localhost:3000/api/checkAuth`);
+  const isAuth = await fetchApi(`${baseUrl}/api/checkAuth`);
   console.log("fetch result:", isAuth);
   return {
     props: {

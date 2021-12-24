@@ -19,6 +19,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { baseUrl } from "../utils/fetchApi";
 import Router from "next/router";
 import AuthContextProvider, { AuthContext } from "../contexts/AuthContext";
 const VARIANT_COLOR = "teal";
@@ -77,7 +78,7 @@ const LoginForm = () => {
   const [message, setMessage] = useState("");
   const onSubmit = async (data) => {
     // alert(JSON.stringify(data));
-    const resp = await fetch("http://localhost:3000/api/login", {
+    const resp = await fetch(`${baseUrl}}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

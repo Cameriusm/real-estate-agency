@@ -18,6 +18,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { baseUrl } from "../utils/fetchApi";
 import { useState } from "react";
 import Router from "next/router";
 const VARIANT_COLOR = "teal";
@@ -74,7 +75,7 @@ const RegisterForm = () => {
 
   const [message, setMessage] = useState("");
   const onSubmit = async (data) => {
-    const resp = await fetch("http://localhost:3000/api/signUp", {
+    const resp = await fetch(`${baseUrl}/api/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
